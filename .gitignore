@@ -1,0 +1,2 @@
+*/*.pdf
+*/*.{{aux,bbl,bcf,blg,fdb_latexmk,fls,lof,log,out,run.xml,synctex.gz,toc}}

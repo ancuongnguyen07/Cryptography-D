@@ -1,0 +1,65 @@
+\section{Exercise 1: Probability and Pseudocode}
+
+%%% Section A
+\subsection*{(a) Probability for \(D_1 + D_2 + D_3 = 17 \)}
+The combination that satisifies the sum of 17:
+\begin{align*}
+    \{6, 6, 5\}
+\end{align*}
+with the permutation for three dices then there are \(3!\) combinations.
+
+In conclusion, the probability that the sum \(D_1 + D_2 + D_3 \) is equal
+to 17:
+\begin{align*}
+    \probsub{D_1,D_2,D_3}{D_1+D_2+D_3=17} &= \frac{3!}{216} \\
+    &= \frac{6}{216} \\
+    &= \frac{1}{36}
+\end{align*}
+
+
+%%% Section B
+\subsection*{(b) Shows the function \(f\) and attacker \(\adv\) that holds
+            \(\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda) = 1} = 1\)}
+
+The experiment \(\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)}\) is defined as:
+\begin{center}
+    \procedure{$\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)$}{
+        x\sample\bin^\lambda\\
+        y\gets f(x)\\
+        x'\sample\adv(y, 1^\lambda)\\
+        \pcif \lvert x' \rvert \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \pcif f(x') = y \pcthen\\
+        \pcind \pcreturn 1\\ % \pcind indents the line
+        \pcreturn 0
+    }
+\end{center}
+
+Then we replace \(f(x)\) by \(\left(x \oplus 1^{\lvert x \rvert}\right)\) and
+\(\adv(y, 1^{\lambda})\) by \(\left(y \oplus 1^{\lambda}\right)\):
+\begin{center}
+    \procedure{$\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)$}{
+        x\sample\bin^\lambda\\
+        y\gets x \oplus 1^\lambda\\
+        x'\sample y \oplus 1^\lambda\\
+        \pcif \lvert x' \rvert \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \pcif f(x') = y \pcthen\\
+        \pcind \pcreturn 1\\ % \pcind indents the line
+        \pcreturn 0
+    }
+\end{center}
+
+We notice that:
+\begin{align*}
+    x'\sample y \oplus 1^\lambda &\Leftrightarrow x'\sample x \oplus 1^\lambda \oplus 1^\lambda\\
+    &\Leftrightarrow x'\sample x \oplus 0^\lambda\\
+    &\Leftrightarrow x'\sample x
+\end{align*}
+
+With given function \(f\) and the attacker \(\adv\),
+\(x'\sample x\) holds with all \(x\sample \bin^\lambda\). From that,
+we infer that \(f(x') = f(x)\) or in other words \(f(x') = y\). Hence,
+\(\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)\) return 1 with all
+\(\bin^\lambda\). In conclusion,
+\(\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda) = 1} = 1\) holds.

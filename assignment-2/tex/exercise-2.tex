@@ -1,0 +1,31 @@
+\section{Some OWFs are not PRGs}
+Note that \(|x|=\lambda\).
+Assume that we have a length-preserving OWF \(g\). According to the appending zeros theorem,
+\(h:=g(x)||0^\lambda\) is a length-expanding OWF (the stretch function \(s(\lambda)
+= \lambda\) as \(|h(x)|=\lambda + s(\lambda) = 2\lambda\)).
+
+Does security experiments on PRG \(h\):
+\begin{center}
+    \begin{pchstack}
+      \procedure{${\mathsf{Exp}}_{h,s,\adv}^{\mathsf{PRG},0}(1^\lambda)$}{
+      x\sample\bin^\lambda\\
+      y\gets h(x)\\
+      b^*\sample\adv(1^\lambda,y)\\
+      \pcreturn b^*}
+    \pchspace
+      \procedure{${\mathsf{Exp}}_{s,\adv}^{\mathsf{PRG},1}(1^\lambda)$}{
+      \\
+      y\sample\bin^{\lambda+s(\lambda)}\\
+      b^*\sample\adv(1^\lambda,y)\\
+      \pcreturn b^*}
+    \end{pchstack}
+\end{center}
+
+We observe that the left-half of the output of OWF \(h(x)\) is a fixed zeros string.
+In other words, the expanded part of \(h\) on the uniformly random string \(x\) does
+not look random at all. Hence, we can conclude that:
+\begin{center}
+    \[ \mathsf{Adv}^{\mathsf{PRG}}_{g,s,\adv}(\lambda):=\big|\prob{{\mathsf{Exp}}_{g,s,\adv}^{\mathsf{PRG},0}(1^\lambda) = 1} 
+   - \prob{{\mathsf{Exp}}_{s,\adv}^{\mathsf{PRG},1}(1^\lambda) = 1}\big| \]
+\end{center}
+is non-negligible, leading to the conclusion that \(h\) is not a PRG.

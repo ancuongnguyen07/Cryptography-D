@@ -1,0 +1,29 @@
+\section{Exercise 1: PRGs can leak half their input}
+Assume that \(g_f\) is not a PRG, so there is an efficient Advantage such that
+\(Adv^{\mathsf{PRG}}_{g, \adv}(\lambda)\) is non-negligible. In other words,
+\(\left| \prob{\mathsf{Exp}_{g, \adv}^{\mathsf{PRG,0}}(1^\lambda) = 1} -
+\prob{\mathsf{Exp}_{\adv}^{\mathsf{PRG,1}}(1^\lambda) = 1} \right|\) is non-negligible.
+
+We have an adversary against \(f\):
+\begin{center}
+    \procedure{$\rdv(1^\lambda, y)$}{
+        x\sample\bin^\lambda\\
+        y\gets f(x_l)\\
+        y'\gets y || x_r\\
+        b^* \sample \adv(1^\lambda, y')\\
+        \pcreturn b^*
+    }
+\end{center}
+
+Then ($u$ is an uniformly random string ${0,1}^\lambda$):
+\begin{align*}
+    Adv^{\mathsf{PRG}}_{f,\rdv}(\lambda) &= \left| \prob{\mathsf{Exp}^{PRG, 0}_{f,\rdv} = 1} 
+                                            - \prob{\mathsf{Exp}^{PRG, 1}_{\rdv} = 1}\right|\\
+    &= \left| \prob{\adv(1^\lambda, y') = 1} - \prob{\adv(1^\lambda, u)} \right|\\
+    &= \left| \prob{\mathsf{Exp}^{PRG, 0}_{g,\adv}(1^\lambda) = 1} - \prob{\mathsf{Exp}^{PRG, 1}_{\adv} = 1} \right|\\
+    &= Adv^{\mathsf{PRG}}_{g, \adv}(\lambda)
+\end{align*}
+
+We observe that \(Adv^{\mathsf{PRG}}_{f,\rdv}(\lambda) = Adv^{\mathsf{PRG}}_{g, \adv}(\lambda)\) which is
+non-negligible, leading to the contradiction of \(f\) is a PRG. Hence, if \(f\) is a PRG, then \(g_f\) is
+a PRG.

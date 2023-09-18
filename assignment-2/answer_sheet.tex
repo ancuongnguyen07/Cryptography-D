@@ -1,0 +1,35 @@
+\documentclass{article}      	% Style of the document                     
+\usepackage{fullpage}
+\usepackage{amsmath}     	   	% Maths                                          
+\usepackage[utf8]{inputenc}	% UTF-8 characters                                               
+\usepackage[T1]{fontenc}    	% Tuki ääkkösille (Finnish names don't cause problems)                                            
+\usepackage{parskip}        		% Linebreak between paragraphs                
+\usepackage{graphicx}       		% Graphics package for adding figures                        
+\usepackage{epstopdf}       		% Possibility to add *.eps figures
+ \usepackage{ dsfont }            % Symbol for real numbers
+\usepackage{ amsfonts }
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{enumitem}        % possibility to label list items by alphabet
+
+\usepackage[probability,adversary,sets,notions,operators,complexity,keys,primitives,asymptotics,advantage]{cryptocode} % for writing cryptography, you need to have the file 'cryptocode.sty' in the same folder as this file
+
+\newcommand{\xor}{\, \texttt{XOR} \,} % shorthand for typing the XOR operator in mathmode
+
+% feel free to add packages you need
+
+\author{Cuong Nguyen 101559968}
+\title{Exercise Sheet 2}
+
+\begin{document}         
+\maketitle
+\tableofcontents
+
+\include{tex/exercise-1}
+\include{tex/exercise-2}
+\include{tex/exercise-3}
+\include{tex/exercise-4}
+\include{tex/exercise-5}
+\include{tex/exercise-6}
+
+\end{document}

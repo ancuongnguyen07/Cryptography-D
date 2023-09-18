@@ -1,4 +1,5 @@
 \documentclass{article}      	% Style of the document                     
+\usepackage[dvipsnames]{xcolor} % Coloring text box background
 \usepackage{fullpage}
 \usepackage{amsmath}     	   	% Maths                                          
 \usepackage[utf8]{inputenc}	% UTF-8 characters                                               
@@ -24,65 +25,67 @@
 \begin{document}         
 \maketitle
 
+\tableofcontents
+
 \include{tex/exercise-1}
 \include{tex/exercise-2}
 \include{tex/exercise-3}
 \include{tex/exercise-4}
 \include{tex/exercise-5}
 
-\section*{Exercise 1} 
+% \section*{Exercise 1} 
 
-Define the function $f$ as
-\begin{align*}
-    f:\, &\bin^* \rightarrow \bin^*\\
-    & x \mapsto x\xor 1^{\abs{x}}
-\end{align*}
-and show that for the following attacker $\adv$, it holds that
-$\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda) = 1} = 1$.
-Above $\xor$ means bitwise XOR operation and 
+% Define the function $f$ as
+% \begin{align*}
+%     f:\, &\bin^* \rightarrow \bin^*\\
+%     & x \mapsto x\xor 1^{\abs{x}}
+% \end{align*}
+% and show that for the following attacker $\adv$, it holds that
+% $\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda) = 1} = 1$.
+% Above $\xor$ means bitwise XOR operation and 
 
-\begin{center}
-    \begin{pchstack}
-    \procedure{ $\adv(y, 1^{\abs{x}})$ }{ 
-        z \leftarrow y \xor 1^{\abs{x}} \\
-        \pcreturn z
-    }
-    \end{pchstack}
-\end{center}
+% \begin{center}
+%     \begin{pchstack}
+%     \procedure{ $\adv(y, 1^{\abs{x}})$ }{ 
+%         z \leftarrow y \xor 1^{\abs{x}} \\
+%         \pcreturn z
+%     }
+%     \end{pchstack}
+% \end{center}
 
-and the experiment is defined as in the lecture:
-\begin{center}
-    \procedure{$\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)$}{
-        x\sample\bin^\lambda\\
-        y\gets f(x)\\
-        x'\sample\adv(y, 1^\lambda)\\
-        \pcif f(x') = y \pcthen\\
-        \pcind \pcreturn 1\\ % \pcind indents the line
-        \pcreturn 0
-    }
-\end{center}
+% and the experiment is defined as in the lecture:
+% \begin{center}
+%     \procedure{$\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)$}{
+%         x\sample\bin^\lambda\\
+%         y\gets f(x)\\
+%         x'\sample\adv(y, 1^\lambda)\\
+%         \pcif f(x') = y \pcthen\\
+%         \pcind \pcreturn 1\\ % \pcind indents the line
+%         \pcreturn 0
+%     }
+% \end{center}
 
-\section*{Exercise 2}
+% \section*{Exercise 2}
 
-\begin{align*}
-    h(b||x) &=
-        \begin{cases}
-            0 || f(x)  & \text{if } b = 0\\
-            1 || x     & \text{if } b = 1.
-        \end{cases}
-\end{align*}
+% \begin{align*}
+%     h(b||x) &=
+%         \begin{cases}
+%             0 || f(x)  & \text{if } b = 0\\
+%             1 || x     & \text{if } b = 1.
+%         \end{cases}
+% \end{align*}
 
-\section*{Exercise 6}
+% \section*{Exercise 6}
 
-\begin{enumerate}[label = (\alph*)] % label \alph numbers the list items by alphabet (a,b,c)
-    \item The sum of two negligible functions is negligible.
-    \item Multiplying a negligible function by an (arbitrary) polynomial yields a negligible function.
-    \item (Very challenging) There exists a sequence of negligible functions 
-    $\nu_\lambda: \NN \rightarrow[0,1]$ 
-    such that the function
-    $\mu(\lambda) := \sum_{i = 1}^\lambda \nu_i(\lambda)$
-    is the constant $1$ function, i.e., for all $\lambda \in \NN$, it holds that $\mu(\lambda) = 1$. Hint: Use a diagonalization argument.
-\end{enumerate}
+% \begin{enumerate}[label = (\alph*)] % label \alph numbers the list items by alphabet (a,b,c)
+%     \item The sum of two negligible functions is negligible.
+%     \item Multiplying a negligible function by an (arbitrary) polynomial yields a negligible function.
+%     \item (Very challenging) There exists a sequence of negligible functions 
+%     $\nu_\lambda: \NN \rightarrow[0,1]$ 
+%     such that the function
+%     $\mu(\lambda) := \sum_{i = 1}^\lambda \nu_i(\lambda)$
+%     is the constant $1$ function, i.e., for all $\lambda \in \NN$, it holds that $\mu(\lambda) = 1$. Hint: Use a diagonalization argument.
+% \end{enumerate}
 
 
 \end{document}

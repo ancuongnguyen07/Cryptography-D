@@ -1,0 +1,173 @@
+\section{Exercise 2: One-Way Functions}
+%%% Statement a)
+\subsubsection{(a) For all length-preserving one-way functions \(f\) and \(g\), the
+following function \(h\) is a one-way function: \(h(x):=f(x)||g(x)\).}
+
+\(h\) is a one-way function: \textbf{TRUE}.
+
+Justification: Assuming that \(h\) is NOT a OWF, we then can infer that both
+\(f\) and \(g\) are not OWF as \(h(x):= f(x)||g(x)\). Hence, if \(f\) and \(g\)
+are OWFs, then \(h\) must be a OWF too. \(h\) function here is a concatenation of
+the output of two OWFs.
+
+%%% Statement b)
+\subsubsection{(b) For all one-way functions \(f\) and all polynomially computable fucntions
+\(b\) with one bit output, the follwing function \(h\) is a one-way function:
+\(h(x):=f(x)||g(x)\).}
+
+\(h(x)\) is a one-way function: \textbf{TRUE}.
+
+Justification: \(h(x):=f(x)||b(x)\) where \(b(x) \rightarrow {0,1}\). \(h\) is a concatenation of
+the output of OWF \(f\) and \(k \in {0,1}\). Assuming \(h\) is NOT a OWF, We can lead to a
+contradiction that \(f\) is NOT a OWF. Hence, if \(f\) is a OWF, then \(h\) must be a OWF too.
+
+%%% Statement c)
+\subsubsection{(c) For all length-preserving one-way functions \(f\) and \(g\), the follwing function
+\(h\) is a one-way function: \(h(x):=g(f(x))\).}
+
+\(h\) is a one-way function: \textbf{TRUE}.
+
+Justification: We observe that \(h(x):=g(f(x))\) where the input of OWF \(g\) is the output
+of OWF \(f\). \(h\) is a OWF.
+
+%%% Statement d)
+\subsubsection{(d) For all length-preserving one-way function \(f\), the following function \(h\)
+is a one-way function: \(h(x):=f(x)_{1\cdots \lceil |x|/2 \rceil}\). I.e., \(h\) returns all bits
+that \(f\) returns, except for half of the bits (rounded up).}
+
+\(h(x)\) is a one-way function: \textbf{TRUE}.
+
+Justification: According to Theorem 2 (Ignoring one half): If \(f\) is a OWF, then
+\(g^f_{ign-1}\) is OWF as well. In this case \(h\) plays a similar role as \(g^f_{ign-1}\)
+as \(h\) ignores the last half of the \(f\) output. Hence, \(h\) is a OWF.
+
+%%% Statement e)
+
+%%% Statement f)
+\subsubsection{(f) For all length-preserving one-way functions \(f, g,\) the following function
+\(h\) is a one-way function: \(h(x):=f(x) \oplus g(x)\).I.e, \(h\) is the bitwise \xor of two OWFs.}
+
+\(h\) is a one-way function: \textbf{FALSE}.
+
+Counterexample:\\
+Let's define the adversary \(\adv\):
+\begin{center}
+    \procedure{$\adv(y, 1^{\lambda})$}{
+        z\gets 0^\lambda\\
+        \pcreturn z
+    }
+\end{center}
+
+Assume that there is a OWF \(T\), we infer that \(f(x):= T(x)||0^{|x|}\) and
+\(g(x):= T(x)||1^{|x|}\) are OWFs as well based on appending zeros/ones theorem.
+Or in other words, the given OWFs \(f\) and \(g\) are built on top of OWF \(T\).
+
+Let's do an experiment \(\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(1^{\lambda})\):
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(1^{\lambda})$}{
+        x\sample {0,1}^\lambda\\
+        y\gets h(x)\\
+        x'\sample \adv(y,1^\lambda)\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \pcif h(x') = y \pcthen\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+Then we plug in the definition of \(h, f,\) and \(g\):
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(1^{\lambda})$}{
+        x\sample {0,1}^\lambda\\
+        \colorbox{BurntOrange}{$y\gets T(x)||0^\lambda \oplus T(x)||1^\lambda$}\\
+        \colorbox{BurntOrange}{$x'\sample 0^\lambda$}\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \colorbox{BurntOrange}{$\pcif T(x')||0^\lambda \oplus T(x')||1^\lambda = y \pcthen$}\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(1^{\lambda})$}{
+        x\sample {0,1}^\lambda\\
+        \colorbox{BurntOrange}{$y\gets 0^\lambda || 1^\lambda$}\\
+        \colorbox{BurntOrange}{$x'\sample 0^\lambda$}\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \colorbox{BurntOrange}{$\pcif 0^\lambda || 1^\lambda = y \pcthen$}\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+So we observe that regardless of the input \(x\), the winning probability
+\(\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)}\) = 1. Hence,
+\(h(x):= f(x) \oplus g(x)\) is not an OWF.
+
+%%% Statement i)
+\subsubsection{(i) For all length-preserving one-way functions \(f\), the following
+function \(h\) is a one-way function: \(h(x):=f(1^{|x|})\).}
+
+\(h\) is a one-way function: \textbf{FALSE}.
+
+Counterexample: Note that \(|x|=|y|=\lambda\)\\
+We observe that only the length of input \(x\) is feed into the OWF \(f\). Thus, the
+randomness of \(x\) does not really matter. Let's define an efficient adversary $\adv$:
+\begin{center}
+    \procedure{$\adv(y)$}{
+        \pcreturn 0^{|y|}
+    }
+\end{center}
+
+Then do the experiment \(\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(\lambda)\):
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(\lambda)$}{
+        x\sample {0,1}^\lambda\\
+        y\gets h(x)\\
+        x'\sample \adv(y)\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \pcif h(x') = y \pcthen\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+Replace the definition of \(\adv\):
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(\lambda)$}{
+        x\sample {0,1}^\lambda\\
+        \colorbox{BurntOrange}{$y\gets f(1^{|x|})$}\\
+        \colorbox{BurntOrange}{Or $y\gets f(1^\lambda)$}\\
+        \colorbox{BurntOrange}{$x'\sample 0^{|y|}$}\\
+        \colorbox{BurntOrange}{Or $x'\sample 0^{\lambda}$}\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \colorbox{BurntOrange}{$\pcif h(0^\lambda) = y \pcthen$}\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+Then:
+\begin{center}
+    \procedure{$\mathsf{Exp}_{h, \adv}^{\mathsf{OW}}(\lambda)$}{
+        x\sample {0,1}^\lambda\\
+        y\gets f(1^\lambda)\\
+        x'\sample 0^{\lambda}\\
+        \pcif |x'| \neq \lambda \pcthen\\
+        \pcind \pcreturn 0\\
+        \colorbox{BurntOrange}{$\pcif f(1^\lambda) = f(1^\lambda) \pcthen$}\\
+        \pcind \pcreturn 1\\
+        \pcreturn 0
+    }
+\end{center}
+
+We observe that as long as the the \(adversary\) choose the proper length of input \(x'\)
+(its randomness does not matter), then \(f(x')\) always return the same output as \(f(x)\)
+does. From the perspective of the experiment above, the winning probability
+\(\prob{\mathsf{Exp}_{f, \adv}^{\mathsf{OW}}(1^\lambda)}\) = 1.
+
